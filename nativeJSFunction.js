@@ -1,4 +1,6 @@
 'use strict';
+// below link use for JWT token and access token in deffrent server as well
+//https://www.youtube.com/watch?v=mbsmsi7l3r4
 
 /*****************NATIVE forEACH*********************/
 
@@ -9,7 +11,7 @@ Array.prototype.myEach = function ( callback ) {
 
 //tests
 var arr = [ 'biggy smalls', 'bif tannin', 'boo radley', 'hans gruber' ];
-arr.myEach( function ( word ) {
+arr.myEach( function (word) {
 	console.log( word );
 } );
 //biggy smalls
@@ -44,7 +46,7 @@ console.log( squareRoot ); // [ 1, 2, 3 ]
 /*****************NATIVE FILTER*************************/
 
 Array.prototype.myFilter = function ( callback, context ) {
-	arr = [];
+	arr = [];	
 	for ( var i = 0;i < this.length;i++ ) {
 		if ( callback.call( context, this[ i ], i, this ) )
 			arr.push( this[ i ] );
