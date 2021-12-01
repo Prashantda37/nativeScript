@@ -139,3 +139,37 @@ var passed = [ 12, 5, 8, 130, 44 ].mySome( function ( element ) {
 	return ( element >= 100 );
 } );
 console.log( 'some: ' + passed ); //some: true
+
+// get image dimention
+export async function getImageWithDimensions (file) {
+  const {
+    contentType, type, preview, url,
+  } = file;
+  const clonedFile = new Blob([file], { type: contentType ?? type });
+  Object.assign(clonedFile, file);
+  clonedFile.preview = preview ?? url;
+  const image = await loadImage(clonedFile.preview);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const { width, height } = image;
+      Object.assign(clonedFile, {
+        width,
+        height,
+        data: reader.result,
+      });
+      resolve(clonedFile);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(clonedFile);
+  });
+}
+function loadImage (url) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = url;
+  });
+} 
+
